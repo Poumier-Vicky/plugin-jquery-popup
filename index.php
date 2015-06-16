@@ -3,7 +3,7 @@
 <head>
 	<title>Test plugin popup</title>
 	<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script></head>
-	<link rel="stylesheet" type="text/css" href="popup.css">
+	<link rel="stylesheet" type="text/css" href="style/popup.css">
 <body>
 	<h1>Test exemple 1 du plugin Popup</h1>
 	<p id="test">Click on me</p>
@@ -32,6 +32,6 @@
 	})(jQuery) ;
 	</script>
 	<!-- we include the popup script -->
-	<script src="popup.js" ></script>
+	<script src="plugin/jquery.popup.js" ></script>
 </body>
 </html>

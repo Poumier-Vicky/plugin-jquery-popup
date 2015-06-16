@@ -1,0 +1,81 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+
+body {
+	text-align: center;
+	background:#e6e6e6;
+	font: 12px/14px Arial, Helvetica, sans-serif; 
+	color:#56523b;
+}
+
+#wrap-popup {
+	margin: 40px auto;
+	text-align: left;
+	width: 460px;
+}
+
+/*#col2 {
+width: 412px;
+float: left;
+display:inline;
+padding: 18px;
+font: 12px/16px Arial, Helvetica, sans-serif;
+background: #fff;
+	-moz-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border: 2px solid #dbdbdb;	
+}*/
+
+/*#titre {
+	width: 200px;
+	float:left;
+}
+*/
+#close {
+	width: 200px;
+	text-align: right;
+	float:right;
+}
+
+.cross_close{
+	float: right;
+	margin: 3px 3px 0 0;
+}
+
+h3 {
+	margin-top: 7px;
+	font-weight:normal;
+	font-size: 18px;
+}
+
+.clear {
+clear: both;
+}
+/*
+ul {
+margin: 0px;
+padding: 0px;
+list-style:none;
+}*/
+
+.top {
+background:#e6e6e6;
+font: 14px/24px Arial, Helvetica, sans-serif;
+}
+
+/*
+li {
+padding: 3px 0px 3px 3px;
+border-bottom: 1px solid #ccc;
+}*/
+
+#myModal{
+	background: #fff;
+}
+
+.content{
+	padding: 5px;
+}
