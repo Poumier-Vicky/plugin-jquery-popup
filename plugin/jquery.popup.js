@@ -1,14 +1,27 @@
 (function($){
+	//let's make a minimal plugin to center the popup:
 	$.fn.centrer = function(){
-		return this.css('top', $(window).height()/2- this.height()/2).css('left', $(window).width()/2- this.width()/2); 
+		return this.css('top', $(window).height()/2- this.height()/2).css('left', $(window).width()/2- this.width()/2);
 	}
 
-	$.fn.modalDialog = function(content, title, width, height){
-		//default value if the height or the width are null 
-		if(height == 0) height = 200;
-		if(width == 0) width = 500;
-		
-	    //we calculate the size of the screen for the pop-up is responsive
+	$.fn.modalDialog = function(options){
+		var defaults= {
+			content: "", 
+			title: "",
+			width: 200, 
+			height: 200 
+		};  
+			
+		//Melting the two objects:
+		var obj = $.extend(defaults, options );
+		var content = obj.content ; 
+		var title   = obj.title ; 
+		var width   = obj.width ; 
+		var height  = obj.height; 
+
+
+
+		//we calculate the size of the screen for the pop-up is responsive
 		if($(window).width() < width){
 			width = width - ($(window).width()/2);
 			height = $(window).height()/2;
@@ -19,8 +32,8 @@
 			.appendTo($(document.body));
 			//an id is assigned to our pop-up
 			div.attr("id", "myModal");
-		
-		
+
+
 		//we build and add some contents in our pop-up
 		var popup = '<a href="#" class="close"><img src="images/cross_2.gif" class="cross_close" title="Close Window" alt="Close" /></a>';
 		popup += "<div class='content'><br/>";
@@ -32,7 +45,7 @@
 		modalDialog(content, title);
 
 		var widthStart = width;
-		
+
 		//the function displays the pop-up
 		function modalDialog(content, title){
 			calque.height($(document).height()). width($(document).width()). show() ;
@@ -67,9 +80,9 @@
 			div.fadeOut("slow");//hide();
 			calque.fadeOut("slow");//hide();
 		});
-	}
+	}// modalDialog
 
 
-	 
-	
+
+
 })(jQuery);
