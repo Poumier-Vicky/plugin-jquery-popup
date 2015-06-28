@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* CSS Document */
+/* CSS for the testpage, not necessary for the plugin  */
 
 
 body {
@@ -9,22 +9,8 @@ body {
 	color:#56523b;
 }
 
-#wrap-popup {
-	margin: 40px auto;
-	text-align: left;
-	width: 460px;
-}
 
-#close {
-	width: 200px;
-	text-align: right;
-	float:right;
-}
 
-.cross_close{
-	float: right;
-	margin: 3px 3px 0 0;
-}
 
 h3 {
 	margin-top: 7px;
@@ -32,17 +18,9 @@ h3 {
 	font-size: 18px;
 }
 
-.clear {
-clear: both;
-}
 
-#myModal{
-	background: #fff;
-}
 
-.content{
-	padding: 5px;
-}
+
 
 .big-margin {
 		margin: 8rem auto ;

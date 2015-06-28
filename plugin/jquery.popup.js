@@ -9,80 +9,118 @@
 			content: "", 
 			title: "",
 			width: 200, 
-			height: 200 
+			height: 200,
+			style: {'backgroundColor': '#fff' }
 		};  
 			
 		//Melting the two objects:
 		var obj = $.extend(defaults, options );
+
 		var content = obj.content ; 
 		var title   = obj.title ; 
 		var width   = obj.width ; 
 		var height  = obj.height; 
 
 
+		//If the popup width is greater than the screen we shrink it to 90%
+		if($(window).width() < width){ width =  $(window).width()* .9 ; }
 
-		//we calculate the size of the screen for the pop-up is responsive
-		if($(window).width() < width){
-			width = width - ($(window).width()/2);
-			height = $(window).height()/2;
-		}
+		var popup = $("<div />").css({
+				'position':"absolute",
+				'zIndex':500, 
+				'width':width,
+				'height' : height
+				}) . hide()
+				. appendTo($(document.body)); 
 
-		var div = $("<div />").css({position:"absolute",zIndex:500, width:width, height: height}). hide().appendTo($(document.body)),
-			calque = $("<div />").css({background: 'url(images/calque.png)',position:'absolute', left: 0,top: 0,zIndex:400,display:'none'})
-			.appendTo($(document.body));
-			//an id is assigned to our pop-up
-			div.attr("id", "myModal");
 
+		popup.css(obj.style) ; 
+
+		var calque = $("<div />").css({
+				'background': 'url(images/calque.png)',
+				'display':'none',
+				'left' : '0px',
+		    		'padding': '5px', 
+				'position':'absolute', 
+				'top' : '0px',
+				'zIndex':400
+				}) .appendTo($(document.body));
 
 		//we build and add some contents in our pop-up
-		var popup = '<a href="#" class="close"><img src="images/cross_2.gif" class="cross_close" title="Close Window" alt="Close" /></a>';
-		popup += "<div class='content'><br/>";
-		popup +="<h3>"+title+"</h3>";
-		popup +=  "<p>"+content+"</p>";
-		popup += "</div>"; //div content
-		popup += "</div"; //div myModal
+		var titlediv  = $('<span></span>' ); 
+		var closebox  = $('<a href="#">X</a>') . css({ 
+							'color': '#bbb',
+							'position':'absolute',
+							'right': '4px',
+		    					'textDecoration':'none',
+							'top':'3px'
+							});
 
-		modalDialog(content, title);
+		var titlebar  = $('<div></div>')
+				. append(titlediv)
+				. append(closebox); 
 
-		var widthStart = width;
+		var contentdiv = $('<div></div>') ;
 
-		//the function displays the pop-up
-		function modalDialog(content, title){
-			calque.height($(document).height()). width($(document).width()). show() ;
-			var p = div.html(popup).fadeIn("slow").centrer() ;
-			$(window).resize(function(){if(p){p.centrer(p);}});
-			return p;
+
+		popup.append(titlebar).append(contentdiv)   ; 
+		setTitle(title) ; 
+		setContent(content) ; 
+		var p = modalDialog();
+
+		// Dismiss the popup on window click
+		
+		calque .on("click", close );
+		closebox.on("click",close ) ; 
+
+		
+		function setTitle(title){
+			titlediv.html(title) ; 
 		}
 
-		//this function resize the pop-up and the calque
-		$(window).resize(function(){
-	        width = $(window).width();
-			height = $(window).height();
-			calque.height(height). width(width). show() ;
-			//we calculate the size of the screen for the pop-up is responsive
-			if($(window).width() <= width){
-				width = width - ($(window).width()/2);
-				height = $(window).height()/2;
-				$("#myModal").css({width:width, height: height});
+		function setContent(content){
+			contentdiv.html(content) ; 
+		}
+
+		function close(){
+			if(popup){ popup.fadeOut("slow") ; }
+			if(calque){ calque.fadeOut("slow") ; } 
+		}
+
+		//Displays the background,  the popup and return it 
+		function modalDialog(){
+			if(calque){
+				calque 	. height($(document).height())
+					. width($(document).width())
+					. show() ;
 			}
-			else{
-				width = widthStart ;
-				height = $(window).height()/2;
-				console.log(width, height)
-				$("#myModal").css({width:width, height: height});
+			popup.fadeIn("fast").centrer() ;
+			$(window).resize(function(){
+				updateSize(popup,calque) ; 
+			});
+			return popup;
+		}
+
+		// Adjust popup and background size when the user resizes the screen.
+		function updateSize(popup, bg ){
+			// Update the modal background if any:
+			if(bg){
+				bg . height($(document).height()) . width($(document).width()) ;
 			}
 
-	    });
+			// update the popup width according to the screen viewport:
+			if(popup){
+				if($(window).width() < width){ 
+					width =  $(window).width()* .9 ; 
+				}else{
+					width = obj.width ;// original width 
+				}
+				popup.css('width', width) ; 
+				popup.centrer(); // center the popup
 
+			}
+		}
 
-		//it allows click on the element body and the cross
-		$("body").on("click", 'div', function(){
-			div.fadeOut("slow");//hide();
-			calque.fadeOut("slow");//hide();
-		});
 	}// modalDialog
-
-
-
 
 })(jQuery);
