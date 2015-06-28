@@ -37,9 +37,10 @@
 		popup.css(obj.style) ; 
 
 		var calque = $("<div />").css({
-				'background': 'url(images/calque.png)',
+				'backgroundColor':'#333',
 				'display':'none',
 				'left' : '0px',
+				'opacity': 0.5,
 		    		'padding': '5px', 
 				'position':'absolute', 
 				'top' : '0px',
