@@ -1,3 +1,7 @@
+/**
+ * this is derhy.com jquery popup plugin project.
+ * Please see: https://github.com/Poumier-Vicky/plugin-jquery-popup/
+ */
 (function($){
 	//let's make a minimal plugin to center the popup:
 	$.fn.centrer = function(){
@@ -10,10 +14,14 @@
 			title: "",
 			width: 200, 
 			height: 200,
-			style: {'backgroundColor': '#fff' }
+			style: {'backgroundColor': '#fff' },
+			modal : true, 
+			poz : {'align':'center' },
+			popid : 'popup-derhy',
+			calcid : 'calque-derhy' 
 		};  
 			
-		//Melting the two objects:
+		//Melting the two objects into one obj :
 		var obj = $.extend(defaults, options );
 
 		var content = obj.content ; 
@@ -25,29 +33,44 @@
 		//If the popup width is greater than the screen we shrink it to 90%
 		if($(window).width() < width){ width =  $(window).width()* .9 ; }
 
+		// Avoid to open another popup each time:
+		if($("#"+ obj.popid).length){
+			var popup = $("#" + obj.popid).html("") ;
+		}else{
 		var popup = $("<div />").css({
 				'position':"absolute",
 				'zIndex':500, 
 				'width':width,
 				'height' : height
 				}) . hide()
+				. css(obj.style)
+				. attr('id', obj.popid) 
 				. appendTo($(document.body)); 
+		}
 
+		if( obj.modal){
+			// avoid to re-open the background :
+			if($("#"+ obj.calcid ).length ){
+				//re-use it if it exists:
+				var calque = $("#" + obj.calcid ) ;
+			}else{
+				var calque = $("<div />").css({
+						'backgroundColor':'#333',
+						'display':'none',
+						'left' : '0px',
+						'opacity': 0.5,
+						'padding': '5px', 
+						'position':'absolute', 
+						'top' : '0px',
+						'zIndex':400
+						}) 
+				.attr('id', obj.calcid) 
+				.on("click",close)
+				.appendTo($(document.body));
+			}
+		}
 
-		popup.css(obj.style) ; 
-
-		var calque = $("<div />").css({
-				'backgroundColor':'#333',
-				'display':'none',
-				'left' : '0px',
-				'opacity': 0.5,
-		    		'padding': '5px', 
-				'position':'absolute', 
-				'top' : '0px',
-				'zIndex':400
-				}) .appendTo($(document.body));
-
-		//we build and add some contents in our pop-up
+		// Adding the content
 		var titlediv  = $('<span></span>' ); 
 		var closebox  = $('<a href="#">X</a>') . css({ 
 							'color': '#bbb',
@@ -55,7 +78,8 @@
 							'right': '4px',
 		    					'textDecoration':'none',
 							'top':'3px'
-							});
+							})
+				. on("click", close )  ; 
 
 		var titlebar  = $('<div></div>')
 				. append(titlediv)
@@ -63,18 +87,16 @@
 
 		var contentdiv = $('<div></div>') ;
 
-
 		popup.append(titlebar).append(contentdiv)   ; 
 		setTitle(title) ; 
 		setContent(content) ; 
 		var p = modalDialog();
 
-		// Dismiss the popup on window click
-		
-		calque .on("click", close );
-		closebox.on("click",close ) ; 
+		return $(this) ; 
 
-		
+		// --------------------------------------------------
+		// below only functions: 
+		//---------------------------------------------------
 		function setTitle(title){
 			titlediv.html(title) ; 
 		}
@@ -83,6 +105,7 @@
 			contentdiv.html(content) ; 
 		}
 
+		// Dismiss the popup 
 		function close(){
 			if(popup){ popup.fadeOut("slow") ; }
 			if(calque){ calque.fadeOut("slow") ; } 
@@ -118,7 +141,6 @@
 				}
 				popup.css('width', width) ; 
 				popup.centrer(); // center the popup
-
 			}
 		}
 

@@ -21,10 +21,13 @@
 				var title = "<h3>Plugin jQuery</h3>";
 				var content="This is a plugin test";
 
+				
 				$("#test").on("click", function(e){
-					$(this).modalDialog({ "content": content, "title":title, "width": 500 } );
+					$(this).modalDialog({ "content": content, "title":title, "width": 500 ,"modal": true } );
 					return false; //return false to prevent automatic return.
 				})
+
+				
 
 		});
 
